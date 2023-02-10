@@ -24,6 +24,5 @@ socket.emit('message', JSON.stringify({size:size,density: 0.9,similar: 0.5}));
 
 //receive details from server
 socket.on("data", function (data) {
-  
   draw(data[1]);
 });
