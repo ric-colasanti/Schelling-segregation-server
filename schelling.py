@@ -48,8 +48,9 @@ class Experiment:
         self.total_cells = size*size -1
         self.total_agents = -1
     
-    def setUp(self,numb_agents):
+    def setUp(self,numb_agents,similar):
         self.cells = []
+        Agent.similar = similar
         for i in range(self.size*self.size):
             self.cells.append(Cell(int(i/self.size),(i%self.size)))
         for cell in self.cells:

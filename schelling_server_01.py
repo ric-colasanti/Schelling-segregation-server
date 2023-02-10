@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO,join_room, leave_room
 from random import random
-from schelling import Experiment
+from schelling import Experiment,Agent
 import json
 
 threads = {}
@@ -15,8 +15,9 @@ def background_thread(user_id,data):
     setup_dict = json.loads(data)
     size = setup_dict["size"]
     density = float(setup_dict["density"])
+    similar = float(setup_dict["similar"])
     experiment = Experiment(size)
-    experiment.setUp(int(size*size*density))
+    experiment.setUp(int(size*size*density),similar)
     while users[user_id]==True:
         experiment.iterate()
         sim, happy, unhappy = experiment.getResultMatrix()
@@ -27,12 +28,11 @@ def background_thread(user_id,data):
 
 @app.route('/')
 def index():
-    return render_template('Dummy01.html')
+    return render_template('Shelling01.html')
 
 @socketio.on('message')
 def handle_message(data):
     users[request.sid]= True
-    print(request.sid)
     threads[request.sid]=socketio.start_background_task(background_thread,request.sid,data)
 
 @socketio.on('connect')

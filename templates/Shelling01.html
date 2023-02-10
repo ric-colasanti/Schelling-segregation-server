@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flask-SocketIO</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" ></script>
+  </head>
+  <body>
+    <h3>Shelling server 001</h3>
+    <canvas id="canvas" width="280" height="280"></canvas>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/CACanvas.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/app.js') }}"></script>
+  </body>
+</html>
