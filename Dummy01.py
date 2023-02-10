@@ -21,7 +21,6 @@ def index():
 @socketio.on('message')
 def handle_message(data):
     print('received message: ' + data,request.sid)
-    
     global thread
     with thread_lock:
         if thread is None:
