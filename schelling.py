@@ -18,7 +18,6 @@ class Cell:
         self.number_neighbours+=1
 
 class Agent:
-    similar = 0.3
     def __init__(self,state,home):
         self.home = home
         self.state = state
@@ -35,10 +34,9 @@ class Agent:
                     dif +=1
         return sim, dif
 
-    def getHappy(self):
+    def getHappy(self,similar):
         sim,dif = self.countSimilar()
-        #print(sim,Agent.similar*(sim+dif))
-        self.happy = sim>=(Agent.similar*(sim+dif))
+        self.happy = sim>=(similar*(sim+dif))
 
 class Experiment:
     def __init__(self,size):        
@@ -47,10 +45,11 @@ class Experiment:
         self.size = size
         self.total_cells = size*size -1
         self.total_agents = -1
+        
     
     def setUp(self,numb_agents,similar):
         self.cells = []
-        Agent.similar = similar
+        self.similar = similar
         for i in range(self.size*self.size):
             self.cells.append(Cell(int(i/self.size),(i%self.size)))
         for cell in self.cells:
@@ -97,7 +96,7 @@ class Experiment:
                 s, d = cell.occupant.countSimilar()
                 similar += s
                 different += d 
-                cell.occupant.getHappy()
+                cell.occupant.getHappy(self.similar)
                 if cell.occupant.happy:
                     happy[x][y]=cell.occupant.state
                 else:
