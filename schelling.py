@@ -1,6 +1,6 @@
 
 import random as rnd
-from time import sleep
+
 
 
 
@@ -79,13 +79,24 @@ class Experiment:
     def getEmpty(self):
         flag = False
         while not flag:
-            cell = self.cells[rnd.randint(0,self.total_cells)]
+            cell = rnd.choice(self.cells)
             flag = cell.occupant == None
         return cell
-           
+
+    def getMatrix(self):
+        matrix = [[0 for _ in range(self.size)  ] for _ in range(self.size)]
+        for cell in self.cells:
+            x = cell.xPos
+            y = cell.yPos
+            if cell.occupant != None:
+                print(cell.occupant.state)
+                matrix[x][y]=cell.occupant.state
+        return matrix
+
     def getResultMatrix(self):
-        happy = [[0 for _ in range(self.size)  ] for _ in range(self.size)]
+        matrix = [[0 for _ in range(self.size)  ] for _ in range(self.size)]
         total =0
+        happy = 0
         unhappy = 0
         similar = 0
         different =0
@@ -98,12 +109,13 @@ class Experiment:
                 different += d 
                 cell.occupant.getHappy(self.similar)
                 if cell.occupant.happy:
-                    happy[x][y]=cell.occupant.state
+                    matrix[x][y]=cell.occupant.state
+                    happy+=1
                 else:
-                    happy[x][y]=cell.occupant.state+2
+                    matrix[x][y]=cell.occupant.state
                     unhappy+=1
         total = similar+different
-        return similar/total * 100.0,happy,unhappy
+        return matrix,happy,unhappy
 
     def iterate(self):
         rnd.shuffle(self.agents)
@@ -117,30 +129,5 @@ class Experiment:
                         cell.occupant = agent
 
 
-    def run(self,numb_agents,):
-        plt.figure()
-        cmap = colors.ListedColormap(['white', 'red','blue','pink','navy'])
-        self.setUp(numb_agents)
-        unhappy = 1
-        time=[]
-        similar=[]
-        t=0
-        while unhappy >0:
-            self.iterate()
-            sim, happy, unhappy = self.getResultMatrix()
-            clear_output(wait=True)
-            plt.rcParams["figure.figsize"] = (16,8) 
-            plt.subplot(1,2,1)
-            plt.imshow(happy,cmap=cmap,vmax=4,vmin=0)
-            plt.axis('off')
-
-            plt.subplot(1,2,2)
-            plt.xlabel("Iterations")
-            plt.ylabel("Average % simmilar")
-            plt.ylim([0,100])
-            similar.append(sim)
-            time.append(t)
-            plt.plot(time,similar)
-            plt.show()
-            t+=1
+   
 
