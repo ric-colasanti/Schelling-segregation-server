@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve flaskserver
+After=network.target
+
+[Service]
+User=ric
+Group=www-data
+WorkingDirectory=/home/ric/Schelling-segregation-server
+Environment="PATH=/home/ric/Schelling-segregation-server/venv/bin"
+ExecStart= /home/ric/Schelling-segregation-server/venv/bin/python /home/ric/Schelling-segregation-server/wsgi.py
+
+[Install]
+WantedBy=multi-user.target
