@@ -48,9 +48,14 @@ var run = function () {
 };
 
 var reset = function(){
-    if (running == 0) {
-        running = 1;
+    if (running == 2) {
+        running = 2;
+        iteration =0;
+        happy =[]
+        unhappy =[]
+        time = []
         let but = (document.getElementById("running").innerHTML = "Stop");
+        console.log("reset",size,density,likeness)
         socket.emit(
         "reset",
       JSON.stringify({ size: size, density: density, likeness: likeness })
@@ -100,7 +105,7 @@ var iteration =0;
 var happy =[]
 var unhappy =[]
 var time = []
-
+console.log("app.js")
 //receive details from server
 socket.on("data", function (data) {
   time.push(iteration)

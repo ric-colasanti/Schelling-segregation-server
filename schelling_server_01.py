@@ -31,6 +31,7 @@ def background_thread(user_id,data):
 
 @app.route('/')
 def index():
+    print("here")
     return render_template('index.html')
 
 
@@ -55,16 +56,18 @@ def handel_restart():
 @socketio.on('reset')
 def handel_reset(data):
     print("reset")
-    users[request.sid]["experiment"] = Experiment(40)
+    user_id = request.sid 
+    users[user_id]["experiment"] = Experiment(40)
     setup_dict = json.loads(data)
     size = setup_dict["size"]
     density = float(setup_dict["density"])
     likeness = float(setup_dict["likeness"])
     users[user_id]["experiment"].setUp(int(size*size*density),likeness)
-    users[request.sid]["run"]="run"    
+    users[user_id]["run"]="run"    
 
 @socketio.on('connect')
 def connect():
+    print('connect')
     user_id = request.sid 
     users[user_id]={}
     users[user_id]["run"]= "run"
@@ -80,4 +83,4 @@ def disconnect():
     
     
 if __name__ == '__main__':
-    socketio.run(app,debug=True,host="0.0.0.0")
+    socketio.run(app,debug=True,host="127.0.0.1")
