@@ -1,0 +1,4 @@
+sudo nano  /etc/systemd/system/flaskserver.service
+systemctl status flaskserver
+sudo nano /etc/nginx/sites-available/default
+systemctl status nginx
