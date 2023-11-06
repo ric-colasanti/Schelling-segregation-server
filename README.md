@@ -8,8 +8,11 @@ flask
 flask-sock
 flask_socketio
 
-### Echo01.py
-Simple Flask-sock program that will echo back anything sent to it
+### schelling_server_01.py
+This is the flask server that uses flask_socketio to push data to a html js page that displays the output of the model
+
+### schelling.py
+This is the schelling segregation model written in python
 
 Directory layout
 
@@ -21,10 +24,5 @@ templates
     
     index.html    
 
-Echo01.py
-
-
-### Dummy01.py
-This is a random data generator that uses flask_socketio and threading
 
 
