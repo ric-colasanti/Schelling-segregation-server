@@ -29,13 +29,8 @@ def background_thread(user_id,data):
     if users[user_id]["run"]=="end":
         users.pop(user_id)
 
-@app.route('/')
-def index():
-    print("here")
-    return render_template('index.html')
 
-
-@app.route('/Shelling')
+@app.route('/Python/Schelling')
 def Shelling():
     return render_template('Shelling01.html')
 
